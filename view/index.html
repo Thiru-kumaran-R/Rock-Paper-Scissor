@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../public/style.css">
+  <script src="../public/main.js" defer></script>
   <title>Rock Paper Scissor</title>
 </head>
 <body>
@@ -18,32 +19,58 @@
         <p class="score__title">
           score
         </p>
-        <p class="score__number">
+        <p class="score__number" id="score">
           12
         </p>
       </div>
     </header>
 
+    <section class="result__board">
+      <!-- <p class="your__result">
+        YOU PICKED
+      </p>
+
+      <p class="opponents__result">
+        THE HOUSE PICKED
+      </p> -->
+    </section>
+
     <section class="main">
-     <div class="paper">
-      <button class="choice paper" data-choice="paper">
-        <img src="../images/icon-paper.svg" alt="paper">
-      </button>
-     </div>
 
-     <div class="scissor">
-      <button class="choice scissor" data-choice="scissor">
-        <img src="../images/icon-scissors.svg" alt="scissor">
-      </button>
-     </div>
+     <button class="choice__paper">
+        <div class="choice">
+          <img src="../images/icon-paper.svg" alt="Paper" class="choice__img">
+        </div>
+     </button>
 
-     <div class="stone">
-      <button class="choice stone" data-choice="stone">
-        <img src="../images/icon-rock.svg" alt="stone">
-      </button>
-     </div>
+     <button class="choice__scissor">
+        <div class="choice">
+          <img src="../images/icon-scissors.svg" alt="Scissor" class="choice__img">
+        </div>
+     </button>
+
+     <button class="choice__rock">
+        <div class="choice">
+          <img src="../images/icon-rock.svg" alt="Rock" class="choice__img">
+        </div>
+     </button>
 
     </section>
+
+      <button class="rules__button" id="rules-btn">
+        Rules
+      </button>
+
+      <section class="rules">
+        <div class="rules__container">
+            <header class="rules__header">
+              <h2 class="rules__title">rules</h2>
+              <img src="../images/icon-close.svg" alt="Close" class="close-btn">
+            </header>
+
+            <img src="../images/image-rules.svg" alt="rules" class="rules__img">
+          </div> 
+      </section>
   </section>
 </body>
 </html>
