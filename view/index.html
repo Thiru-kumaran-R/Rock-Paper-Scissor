@@ -1,76 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../public/style.css">
-  <script src="../public/main.js" defer></script>
-  <title>Rock Paper Scissor</title>
-</head>
-<body>
-  <section class="container">
-    <header class="header">
-      <img src="../images/logo.svg" alt="logo">
-      
-      <div class="score">
-        <p class="score__title">
-          score
-        </p>
-        <p class="score__number" id="score">
-          12
-        </p>
-      </div>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../public/style.css" />
+    <script src="../public/main.js" defer></script>
+    <title>Rock Paper Scissor</title>
+  </head>
+  <body>
+    <section class="container">
+      <header class="header">
+        <img src="../images/logo.svg" alt="logo" />
 
-    <section class="result__board">
-      <!-- <p class="your__result">
-        YOU PICKED
-      </p>
-
-      <p class="opponents__result">
-        THE HOUSE PICKED
-      </p> -->
-    </section>
-
-    <section class="main">
-
-     <button class="choice__paper">
-        <div class="choice">
-          <img src="../images/icon-paper.svg" alt="Paper" class="choice__img">
+        <div class="score">
+          <p class="score__title">score</p>
+          <p class="score__number" id="score">12</p>
         </div>
-     </button>
+      </header>
 
-     <button class="choice__scissor">
-        <div class="choice">
-          <img src="../images/icon-scissors.svg" alt="Scissor" class="choice__img">
-        </div>
-     </button>
+      <section class="main">
+        <button class="choice__paper">
+          <div class="choice">
+            <img
+              src="../images/icon-paper.svg"
+              alt="Paper"
+              class="choice__img"
+            />
+          </div>
+        </button>
 
-     <button class="choice__rock">
-        <div class="choice">
-          <img src="../images/icon-rock.svg" alt="Rock" class="choice__img">
-        </div>
-     </button>
+        <button class="choice__scissor">
+          <div class="choice">
+            <img
+              src="../images/icon-scissors.svg"
+              alt="Scissor"
+              class="choice__img"
+            />
+          </div>
+        </button>
 
-    </section>
+        <button class="choice__rock">
+          <div class="choice">
+            <img src="../images/icon-rock.svg" alt="Rock" class="choice__img" />
+          </div>
+        </button>
+      </section>
 
-      <button class="rules__button" id="rules-btn">
-        Rules
-      </button>
-
+      <!--Rules Button-->
+      <button class="rules__button" id="rules-btn">Rules</button>
+      <!---Rules Page-->
       <section class="rules">
         <div class="rules__container">
-            <header class="rules__header">
-              <h2 class="rules__title">rules</h2>
-              <img src="../images/icon-close.svg" alt="Close" class="close-btn">
-            </header>
+          <header class="rules__header">
+            <h2 class="rules__title">rules</h2>
+            <img src="../images/icon-close.svg" alt="Close" class="close-btn" />
+          </header>
 
-            <img src="../images/image-rules.svg" alt="rules" class="rules__img">
-          </div> 
+          <img src="../images/image-rules.svg" alt="rules" class="rules__img" />
+        </div>
       </section>
-  </section>
-</body>
+
+      <!-- <section class="result__board">
+        <h2 class="your__result">
+          YOU PICKED
+        </h2>
+  
+        <h2 class="opponents__result">
+          THE HOUSE PICKED
+        </h2>
+
+        <div class="your__choice"></div>
+        <div class="oppo__choice"></div>
+      </section> -->
+    </section>
+  </body>
 </html>

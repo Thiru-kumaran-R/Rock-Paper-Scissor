@@ -73,20 +73,6 @@ body{
     font-weight: bolder;
 }
 
-.result__board{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: fit-content;
-    padding: 3rem 3rem 0  3rem;
-}
-
-.result__board > *{
-    color: #fff;
-    letter-spacing: 0.1rem;
-    font-weight: 900;
-}
-
 .main{
     position: relative;
     display: grid;
@@ -104,10 +90,15 @@ body{
     position: absolute;
     height: 100%;
     aspect-ratio: 1/1;
-    top: 35%;
+    top: 30%;
     left: 26%;
     background: url('../images/bg-triangle.svg') no-repeat;
     z-index: -1;
+}
+
+.main > button:hover{
+    scale: 1.1;
+    transition: scale 0.2s ease-in-out;
 }
 
 .choice__paper,
@@ -120,21 +111,21 @@ body{
 }
 
 .choice__paper{
-    grid-area: paper ;
+    grid-area: "paper" ;
     border-radius: 100%;
     border: 20px solid var(--to-paper);
     box-shadow: -1px 10px var(--shadow-dark) ,-1px 10px var(--from-paper);
 }
 
 .choice__rock{
-    grid-area: rock ;
+    grid-area: rock;
     border-radius: 100%;
     border: 20px solid var(--to-rock);
     box-shadow: -1px 10px var(--shadow-dark),-1px 10px var(--from-rock);
 }
 
 .choice__scissor{
-    grid-area: scissor ;
+    grid-area: "scissor" ;
     border-radius: 100%;
     border: 20px solid var(--to-scissor);
     box-shadow: -1px 10px var(--shadow-dark), -1px 10px var(--from-scissor);
@@ -224,7 +215,53 @@ body{
     padding: 2rem;
 }
 
-.show__result_board{
+.show__rules_board{
     opacity: 1;
     pointer-events: inherit;
+}
+
+.result__board{
+    display: grid;
+    place-items: center;
+    grid-template-areas: 
+        "your-text oppo-text"
+        "your-choice oppo-choice";
+    height: fit-content;
+    gap: 6rem;
+    margin: 3rem auto;
+}
+
+.your__result{
+    grid-area: "your-text";
+}
+
+.opponents__result{
+    grid-area: "oppo-text";
+}
+
+.your__choice{
+    grid-area: "your-choice";
+}
+
+.oppo__choice{
+    grid-area: "oppo-choice";
+}
+
+/* Place holder for waiting  */
+.waiting_to_chose{
+    height: 12rem;
+    aspect-ratio: 1/1;
+    background-color: var(--bg-dark);
+    border-radius: 50%;
+}
+
+/* Increase size after choosing */
+.increase-size{
+    scale: 1.5;
+}
+
+.result__board > *{
+    color: #fff;
+    letter-spacing: 0.1rem;
+    font-weight: 600;
 }
