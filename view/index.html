@@ -9,75 +9,95 @@
       href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,800;0,900;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../public/style.css" />
-    <script src="../public/main.js" defer></script>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/client.js" defer></script>
+    <!-- <script src="/socket.io/socket.io.js" defer></script> -->
     <title>Rock Paper Scissor</title>
   </head>
   <body>
     <section class="container">
       <header class="header">
-        <img src="../images/logo.svg" alt="logo" />
+        <img src="/logo.svg" alt="logo" />
 
         <div class="score">
           <p class="score__title">score</p>
-          <p class="score__number" id="score">12</p>
+          <p class="score__number" id="score">0</p>
         </div>
       </header>
 
       <section class="main">
-        <button class="choice__paper">
+        <button class="choice__paper" onclick="clickChoice('paper')">
           <div class="choice">
             <img
-              src="../images/icon-paper.svg"
+              src="/icon-paper.svg"
               alt="Paper"
               class="choice__img"
             />
           </div>
         </button>
 
-        <button class="choice__scissor">
+        <button class="choice__scissor" onclick="clickChoice('scissor')">
           <div class="choice">
             <img
-              src="../images/icon-scissors.svg"
+              src="/icon-scissors.svg"
               alt="Scissor"
               class="choice__img"
             />
           </div>
         </button>
 
-        <button class="choice__rock">
+        <button class="choice__rock" onclick="clickChoice('rock')">
           <div class="choice">
-            <img src="../images/icon-rock.svg" alt="Rock" class="choice__img" />
+            <img src="/icon-rock.svg" alt="Rock" class="choice__img" />
           </div>
         </button>
       </section>
 
       <!--Rules Button-->
       <button class="rules__button" id="rules-btn">Rules</button>
+
       <!---Rules Page-->
       <section class="rules">
         <div class="rules__container">
           <header class="rules__header">
             <h2 class="rules__title">rules</h2>
-            <img src="../images/icon-close.svg" alt="Close" class="close-btn" />
+            <img src="/icon-close.svg" alt="Close" class="close-btn" />
           </header>
 
-          <img src="../images/image-rules.svg" alt="rules" class="rules__img" />
+          <img src="/image-rules.svg" alt="rules" class="rules__img" />
         </div>
       </section>
 
-      <!-- <section class="result__board">
-        <h2 class="your__result">
-          YOU PICKED
-        </h2>
-  
-        <h2 class="opponents__result">
-          THE HOUSE PICKED
-        </h2>
+      <!--Results Page-->
+      <section class="result__board">
+        <h2 class="your__result">YOU PICKED</h2>
+
+        <h2 class="opponents__result">THE HOUSE PICKED</h2>
 
         <div class="your__choice"></div>
+
+        <div class="results">
+          <h2 class="results__heading">you lose</h2>
+          <button class="results__button">play again</button>
+        </div>
+
         <div class="oppo__choice"></div>
-      </section> -->
+      </section>
     </section>
+
+    <!-- join page -->
+    <section class="join">
+      <div class="join__container">
+        <img src="/logo.svg" alt="LOGO" />
+        <div class="join__options">
+          <button class="create_room" onclick="createRoom()">create room</button>
+          
+          <button class="join__room" onclick="joinRoom()">join room</button>
+          <input type="text" placeholder="Enter Room-ID" id="room-id">
+        </div>
+      </div>
+    </section>
+
+    <script src="/socket.io/socket.io.js"></script>
   </body>
 </html>
