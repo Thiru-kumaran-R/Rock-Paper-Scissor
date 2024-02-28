@@ -192,6 +192,7 @@ body {
   transition: opacity 0.3s ease-in-out;
   background-color: var(--bg-dark);
   pointer-events: none;
+  z-index: 1;
 }
 
 .rules__container {
@@ -240,10 +241,12 @@ body {
 
 .your__result {
   grid-area: your-text ;
+  z-index: 10;
 }
 
 .opponents__result {
   grid-area: oppo-text;
+  z-index: 1;
 }
 
 .your__choice {
@@ -268,13 +271,12 @@ body {
 }
 
 /*result grid after both players choice*/
-.result__board.after-choosing {
+.after-choosing {
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
     "your-text results oppo-text"
     "your-choice results oppo-choice";
-  max-width: fit-content;
-  margin: 0 auto;
+  margin: 3rem auto;
 }
 
 /* display  grif*/
@@ -285,7 +287,7 @@ body {
 }
 
 .results__heading {
-    display: block;
+  display: block;
   text-align: center;
   font-size: 2.5rem;
   text-transform: uppercase;
@@ -301,6 +303,7 @@ body {
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 0.2rem;
+  cursor: pointer;
   border: none;
 }
 
@@ -342,4 +345,9 @@ body {
     color: var(--score-text);
     border: none;
     cursor: pointer;
+}
+
+.winner {
+  border-radius: 50%;
+  box-shadow: 0 0 0 20px #2b3956, 0 0 0 40px #263554, 0 0 0 60px #223351;
 }
