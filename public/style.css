@@ -192,7 +192,7 @@ body {
   transition: opacity 0.3s ease-in-out;
   background-color: var(--bg-dark);
   pointer-events: none;
-  z-index: 1;
+  z-index: 9;
 }
 
 .rules__container {
@@ -241,7 +241,7 @@ body {
 
 .your__result {
   grid-area: your-text ;
-  z-index: 10;
+  z-index: 1;
 }
 
 .opponents__result {
@@ -349,5 +349,39 @@ body {
 
 .winner {
   border-radius: 50%;
-  box-shadow: 0 0 0 20px #2b3956, 0 0 0 40px #263554, 0 0 0 60px #223351;
+  animation: winnerAnimation 3s infinite linear alternate;
+}
+
+@keyframes winnerAnimation {
+  0%{
+    box-shadow: none;
+  }
+  25%{
+    box-shadow: 0 0 0 20px #2b3956, 0 0 0 40px #263554;
+  }
+  50%{
+    box-shadow: 0 0 0 20px #2b3956, 0 0 0 40px #263554, 0 0 0 60px #223351;
+  }
+  75%{
+    box-shadow: 0 0 0 20px #2b3956 0 0 0 40px #263554;
+  }
+  100%{
+    box-shadow: none;
+  }
+}
+
+.grid{
+  display: grid;
+}
+
+.flex{
+  display: flex;
+}
+
+.none{
+  display: none;
+}
+
+.block{
+  display: block;
 }

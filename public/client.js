@@ -23,7 +23,7 @@ const joinPage = document.querySelector('.join');
 const roomId = document.getElementById('room-id');
 
 const paperChoice = `
-    <button class="choice__paper" >
+    <button class="choice__paper" onclick="clickChoice('paper')">
         <div class="choice">
             <img
               src="/icon-paper.svg"
@@ -34,7 +34,7 @@ const paperChoice = `
     </button>
 `
 const rockChoice = `
-    <button class="choice__rock">
+    <button class="choice__rock" onclick="clickChoice('rock')">
         <div class="choice">
             <img 
                 src="/icon-rock.svg" 
@@ -46,7 +46,7 @@ const rockChoice = `
 `
 
 const scissorChoice = `
-    <button class="choice__scissor">
+    <button class="choice__scissor" onclick="clickChoice('scissor')">
         <div class="choice">
             <img
                 src="/icon-scissors.svg"
@@ -57,7 +57,7 @@ const scissorChoice = `
     </button>
 `
 rulesBtn.addEventListener('click', () => {
-    rulesBoard.classList.add('show__rules_board');
+    rulesBoard.classList.toggle('show__rules_board');
     closeRules.style.cursor = 'pointer';
 });
 
@@ -68,6 +68,7 @@ closeRules.addEventListener('click', () => {
 let roomID
 let player1 = false;
 let score = 0;
+let winner;
 
 ///Socket
 const socket = io();
@@ -88,10 +89,10 @@ const joinRoom = () => {
 }
 
 socket.on('playersConnected', () => {
-    joinPage.style.display = 'none';
-    header.style.display = 'flex';
-    gameArea.style.display = 'grid';
-    rulesBtn.style.display = 'block';
+    joinPage.classList.add('none'); 
+    header.classList.add('flex');
+    gameArea.classList.add('grid');
+    rulesBtn.classList.add('block');
 });
 
 const clickChoice = (rpschoice) => {
@@ -101,20 +102,27 @@ const clickChoice = (rpschoice) => {
     }else if(player1 == false){
         player = 'p2Choice'
     }
-    gameArea.style.display = 'none';
-    resultBoard.style.display = 'grid';
-    oppoChoice.classList.toggle('waiting_to_chose');
+    gameArea.classList.add('none');
+    resultBoard.classList.add('grid');
+    oppoChoice.classList.add('waiting_to_chose');
     if(rpschoice == 'rock'){
         yourChoice.innerHTML = rockChoice;
-        yourChoice.classList.add('increase-size');
+        yourChoice.classList.toggle('increase-size');
     }
     if(rpschoice == 'paper'){
         yourChoice.innerHTML = paperChoice;
-        yourChoice.classList.add('increase-size');
+        yourChoice.classList.toggle('increase-size');
     }
     if(rpschoice == 'scissor'){
         yourChoice.innerHTML = scissorChoice;
-        yourChoice.classList.add('increase-size');
+        yourChoice.classList.toggle('increase-size');
+    }
+
+    const isNoneResultBoard =  resultBoard.classList.contains('none');
+    if(isNoneResultBoard){
+        resultBoard.classList.add('grid');
+        resultBoard.classList.remove('none');
+        resultBoard.classList.add('after-choosing');
     }
 
     socket.emit(player,  {
@@ -125,17 +133,28 @@ const clickChoice = (rpschoice) => {
 
 socket.on('p1Choice', data => {
     if(!player1){
+        const isNoneResult = results.classList.contains('none');
+        if(isNoneResult){
+            results.classList.remove('none');
+            results.classList.add('grid');
+        }
         displayResult(data.rpsValue);
     }
 });
 
 socket.on('p2Choice', data => {
     if(player1){
+        const isNoneResult = results.classList.contains('none');
+        if(isNoneResult){
+            results.classList.remove('none');
+            results.classList.add('grid');
+        }
         displayResult(data.rpsValue);
     }
 })
 
 socket.on('winner', data => {
+    winner = data;
     if(data == 'draw'){
         resultsHeading.innerText = 'DRAW';
     }else if(data == 'p1'){
@@ -162,53 +181,79 @@ socket.on('winner', data => {
             oppoChoice.classList.add('winner');
         }  
     }
-    document.querySelector('.container').style.maxWidth = '1000px';
-    oppoChoice.classList.toggle('waiting_to_chose');
-    resultBoard.classList.toggle('after-choosing');
-    results.style.display = 'grid';
+    oppoChoice.classList.remove('waiting_to_chose');
+    resultBoard.classList.add('after-choosing');
+    results.classList.add('grid');
+    
     scoreNum.innerText = score;
 })
 
-// socket.on('p1Score', data => {
-//     scoreNum.innerText = data.score;
-//     joinPage.style.display = 'none';
-//     header.style.display = 'flex';
-//     gameArea.style.display = 'grid';
-//     rulesBtn.style.display = 'block';
-//     document.querySelector('.container').style.maxWidth = '700px';
-//     resultBoard.classList.toggle('after-choosing');
-//     resultBoard.style.display = 'none';
-// })
+socket.on('p1Score', data => {
+    if(player1){
+        scoreNum.innerText = data.score;
+        displayResult(data.choice);
+    }
+})
 
-// socket.on('p2Score', data => {
-//     scoreNum.innerText = data.score;
-//     joinPage.style.display = 'none';
-//     header.style.display = 'flex';
-//     gameArea.style.display = 'grid';
-//     rulesBtn.style.display = 'block';
-//     document.querySelector('.container').style.maxWidth = '700px';
-//     resultBoard.classList.toggle('after-choosing');
-//     resultBoard.style.display = 'none';
-// })
+socket.on('p2Score', data => {
+    if(!player1){
+        scoreNum.innerText = data.score;
+        displayResult(data.choice);
+     }
+})
 
 const playAgain = () => {
+    removeWinner(winner);
+    winner = '';
+    //results board
+    resultBoard.classList.remove('grid');
+    resultBoard.classList.add('none');
+    resultBoard.classList.remove('after-choosing');
+    //results
+    results.classList.remove('grid');
+    results.classList.add('none');
+
+    //choice
+    yourChoice.innerHTML = '';
+    yourChoice.classList.toggle('increase-size');
+    oppoChoice.innerHTML = '';
+    oppoChoice.classList.toggle('increase-size');
+    //main game area
+    gameArea.classList.remove('none');
+    gameArea.classList.add('grid');
+
+    document.querySelector('.opponents__result').innerText = ' Waiting ..';
+
     const player = player1 ? 'p1Score' : 'p2Score';
-    socket.emit(player, {score : score, roomID : roomID, player1 : player1})
+    socket.emit(player, {score : score, roomID : roomID, player1 : player1});
 }
 
+
 const displayResult = (choice) => {
-    oppoChoice.classList.toggle('waiting_to_chose');
+    oppoChoice.classList.remove('waiting_to_chose');
     document.querySelector('.opponents__result').innerText = 'OPPO PICKED';
     if(choice == 'rock'){
         oppoChoice.innerHTML = rockChoice;
-        oppoChoice.classList.add('increase-size');
+        oppoChoice.classList.toggle('increase-size');
     }
     if(choice == 'paper'){
         oppoChoice.innerHTML = paperChoice;
-        oppoChoice.classList.add('increase-size');
+        oppoChoice.classList.toggle('increase-size');
     }
     if(choice == 'scissor'){
         oppoChoice.innerHTML = scissorChoice;
-        oppoChoice.classList.add('increase-size');
+        oppoChoice.classList.toggle('increase-size');
+    }
+}
+
+const removeWinner = (data) => {
+    if(data == 'p1' && player1){
+        yourChoice.classList.remove('winner');
+    }else if(data == 'p2' && !player1){
+        yourChoice.classList.remove('winner');
+    }else if(data == 'p1' && !player1){
+        oppoChoice.classList.remove('winner');
+    }else if(data == 'p2' && player1){
+        oppoChoice.classList.remove('winner');
     }
 }

@@ -53,7 +53,7 @@ io.on('connection', socket => {
             const choice = data.rpschoice;
             const roomID = data.roomID;
             room[roomID].p1Choice = choice;
-            socket.to(roomID).emit('p1Choice', {rpsValue : choice})
+            socket.to(roomID).emit('p1Choice', {rpsValue : choice, score : room[roomID].p1Score})
             if(room[roomID].p2Choice != null){
                 declareWinner(roomID)
             }
@@ -65,34 +65,47 @@ io.on('connection', socket => {
             const choice = data.rpschoice;
             const roomID = data.roomID;
             room[roomID].p2Choice = choice;
-            socket.to(roomID).emit('p2Choice', {rpsValue : choice})
+            socket.to(roomID).emit('p2Choice', {rpsValue : choice, score : room[roomID].p2Score})
             if(room[roomID].p1Choice != null){
                 declareWinner(roomID)
             }
         }
     })
 
-    socket.on('p1Score', data => {
-        const roomID = data.roomID;
-        room[roomID].p1Score = data.score;
-        room[roomID].p1Choice = null;
-        const player1 = data.player1;
-        console.log(room);
-        if(player1){
-            socket.to(roomID).emit('p1Score', {score : room[roomID].p1Score, choice : room[roomID].p1Choice });
-        }
-    });
+    // socket.on('p1Score', data => {
+    //     const roomID = data.roomID;
+    //     room[roomID].p1Score = data.score;
+    //     room[roomID].p1Choice = null;
+    //     const player1 = data.player1;
+    //     console.log(room);
+    //     if(player1){
+    //         socket.to(roomID).emit('p1Score', {score : room[roomID].p1Score, choice : room[roomID].p2Choice });
+    //     }
+    // });
 
-    socket.on('p2Score', data => {
+    // socket.on('p2Score', data => {
+    //     const roomID = data.roomID;
+    //     room[roomID].p2Score = data.score;
+    //     room[roomID].p2Choice = null;
+    //     const player1 = data.player1;
+    //     console.log(room);
+    //     if(!player1){
+    //         socket.to(roomID).emit('p2Score', {score : room[roomID].p2Score, choice : room[roomID].p1Choice});
+    //     }
+    // });
+
+    socket.on('playAgain', data => {
+        const score = data.score;
         const roomID = data.roomID;
-        room[roomID].p2Score = data.score;
-        room[roomID].p2Choice = null;
-        const player1 = data.player1;
-        console.log(room);
-        if(!player1){
-            socket.to(roomID).emit('p2Score', {score : room[roomID].p2Score, choice : room[roomID].p2Choice});
+        if(data.player1){
+            socket.to(roomID).emit('p1Score', {score : room[roomID].p2Score, choice : room[roomID].p1Choice});
+            room[roomID].p1Score = score
+        }else{
+            socket.to(roomID).emit('p2Score', {score : room[roomID].p2Score, choice : room[roomID].p1Choice});
+           room[roomID].p2Score = score
         }
-    });
+        socket.emit('playAgain', {scores : room[roomID]})
+    })
 
 });
 
