@@ -104,7 +104,6 @@ const clickChoice = (rpschoice) => {
     }
     gameArea.classList.add('none');
     resultBoard.classList.add('grid');
-    oppoChoice.classList.add('waiting_to_chose');
     if(rpschoice == 'rock'){
         yourChoice.innerHTML = rockChoice;
         yourChoice.classList.toggle('increase-size');
@@ -118,13 +117,23 @@ const clickChoice = (rpschoice) => {
         yourChoice.classList.toggle('increase-size');
     }
 
+    if(oppoChoice.innerHTML == ''){
+        document.querySelector('.opponents__result').innerText = 'Choosing...';
+        oppoChoice.classList.add('waiting_to_chose');
+        oppoChoice.classList.remove('winner');
+    }else if(oppoChoice.innerHTML != ''){
+        document.querySelector('.opponents__result').innerText = 'OPPO PICKED';
+        oppoChoice.classList.remove('waiting_to_chose');
+    }
+
     const isNoneResultBoard =  resultBoard.classList.contains('none');
     if(isNoneResultBoard){
         resultBoard.classList.add('grid');
         resultBoard.classList.remove('none');
         resultBoard.classList.add('after-choosing');
+        document.querySelector('.opponents__result').innerText = 'Choosing...';
+        oppoChoice.classList.add('waiting_to_chose');
     }
-
     socket.emit(player,  {
         rpschoice : rpschoice,
         roomID : roomID
@@ -132,6 +141,7 @@ const clickChoice = (rpschoice) => {
 }
 
 socket.on('p1Choice', data => {
+    document.querySelector('.opponents__result').innerText = 'OPPO PICKED';
     if(!player1){
         const isNoneResult = results.classList.contains('none');
         if(isNoneResult){
@@ -143,6 +153,7 @@ socket.on('p1Choice', data => {
 });
 
 socket.on('p2Choice', data => {
+    document.querySelector('.opponents__result').innerText = 'OPPO PICKED';
     if(player1){
         const isNoneResult = results.classList.contains('none');
         if(isNoneResult){
@@ -151,12 +162,19 @@ socket.on('p2Choice', data => {
         }
         displayResult(data.rpsValue);
     }
+});
+
+socket.on('waitingForPlayer', () => {
+    document.querySelector('.opponents__result').innerText = 'Choosing...';
+    oppoChoice.classList.add('waiting_to_chose');
 })
 
 socket.on('winner', data => {
+    document.querySelector('.opponents__result').innerText = 'OPPO PICKED';
     winner = data;
     if(data == 'draw'){
         resultsHeading.innerText = 'DRAW';
+        score += 0;
     }else if(data == 'p1'){
         if(player1){
             resultsHeading.innerText = 'YOU WIN';
@@ -188,46 +206,17 @@ socket.on('winner', data => {
     scoreNum.innerText = score;
 })
 
-socket.on('p1Score', data => {
-    if(player1){
-        scoreNum.innerText = data.score;
-        displayResult(data.choice);
-    }
+
+const playAgain =  () => {    
+    socket.emit('playerClicked', {score : score, roomID : roomID, player1 : player1});
+    removeWinner();
+    returnToGame();
+};
+
+socket.on('playAgain', data => {
+    removeWinner();
+    returnToGame(); 
 })
-
-socket.on('p2Score', data => {
-    if(!player1){
-        scoreNum.innerText = data.score;
-        displayResult(data.choice);
-     }
-})
-
-const playAgain = () => {
-    removeWinner(winner);
-    winner = '';
-    //results board
-    resultBoard.classList.remove('grid');
-    resultBoard.classList.add('none');
-    resultBoard.classList.remove('after-choosing');
-    //results
-    results.classList.remove('grid');
-    results.classList.add('none');
-
-    //choice
-    yourChoice.innerHTML = '';
-    yourChoice.classList.toggle('increase-size');
-    oppoChoice.innerHTML = '';
-    oppoChoice.classList.toggle('increase-size');
-    //main game area
-    gameArea.classList.remove('none');
-    gameArea.classList.add('grid');
-
-    document.querySelector('.opponents__result').innerText = ' Waiting ..';
-
-    const player = player1 ? 'p1Score' : 'p2Score';
-    socket.emit(player, {score : score, roomID : roomID, player1 : player1});
-}
-
 
 const displayResult = (choice) => {
     oppoChoice.classList.remove('waiting_to_chose');
@@ -246,14 +235,30 @@ const displayResult = (choice) => {
     }
 }
 
-const removeWinner = (data) => {
-    if(data == 'p1' && player1){
+const removeWinner = () => {
+    const isWinnerP1 = yourChoice.classList.contains('winner');
+    const isWinnerP2 = oppoChoice.classList.contains('winner');
+    if(isWinnerP1){
         yourChoice.classList.remove('winner');
-    }else if(data == 'p2' && !player1){
-        yourChoice.classList.remove('winner');
-    }else if(data == 'p1' && !player1){
-        oppoChoice.classList.remove('winner');
-    }else if(data == 'p2' && player1){
+    }
+    if(isWinnerP2){
         oppoChoice.classList.remove('winner');
     }
+}
+
+const returnToGame = () => {
+    resultBoard.classList.remove('grid');
+    resultBoard.classList.add('none');
+    resultBoard.classList.remove('after-choosing');
+    //results
+    results.classList.remove('grid');
+    results.classList.add('none');
+    //choice
+    yourChoice.innerHTML = '';
+    yourChoice.classList.toggle('increase-size');
+    oppoChoice.innerHTML = '';
+    oppoChoice.classList.toggle('increase-size');
+    //main game area
+    gameArea.classList.remove('none');
+    gameArea.classList.add('grid');
 }

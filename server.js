@@ -56,6 +56,8 @@ io.on('connection', socket => {
             socket.to(roomID).emit('p1Choice', {rpsValue : choice, score : room[roomID].p1Score})
             if(room[roomID].p2Choice != null){
                 declareWinner(roomID)
+            }else{
+                socket.emit('waitingForPlayer')
             }
         }  
     });
@@ -68,44 +70,19 @@ io.on('connection', socket => {
             socket.to(roomID).emit('p2Choice', {rpsValue : choice, score : room[roomID].p2Score})
             if(room[roomID].p1Choice != null){
                 declareWinner(roomID)
+            }else{
+                socket.emit('waitingForPlayer')
             }
         }
     })
 
-    // socket.on('p1Score', data => {
-    //     const roomID = data.roomID;
-    //     room[roomID].p1Score = data.score;
-    //     room[roomID].p1Choice = null;
-    //     const player1 = data.player1;
-    //     console.log(room);
-    //     if(player1){
-    //         socket.to(roomID).emit('p1Score', {score : room[roomID].p1Score, choice : room[roomID].p2Choice });
-    //     }
-    // });
-
-    // socket.on('p2Score', data => {
-    //     const roomID = data.roomID;
-    //     room[roomID].p2Score = data.score;
-    //     room[roomID].p2Choice = null;
-    //     const player1 = data.player1;
-    //     console.log(room);
-    //     if(!player1){
-    //         socket.to(roomID).emit('p2Score', {score : room[roomID].p2Score, choice : room[roomID].p1Choice});
-    //     }
-    // });
-
-    socket.on('playAgain', data => {
-        const score = data.score;
+    socket.on('playerClicked', data => {
         const roomID = data.roomID;
-        if(data.player1){
-            socket.to(roomID).emit('p1Score', {score : room[roomID].p2Score, choice : room[roomID].p1Choice});
-            room[roomID].p1Score = score
-        }else{
-            socket.to(roomID).emit('p2Score', {score : room[roomID].p2Score, choice : room[roomID].p1Choice});
-           room[roomID].p2Score = score
-        }
-        socket.emit('playAgain', {scores : room[roomID]})
-    })
+        room[roomID].p1Score = data.score;
+        room[roomID].p1Choice = null;
+        console.log(room[roomID]);
+        socket.to(roomID).emit('playAgain', {p1Score : room[roomID].p1Score, p2Score : room[roomID].p2Score });
+    });
 
 });
 
