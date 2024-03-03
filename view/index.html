@@ -28,21 +28,13 @@
       <section class="main">
         <button class="choice__paper" onclick="clickChoice('paper')">
           <div class="choice">
-            <img
-              src="/icon-paper.svg"
-              alt="Paper"
-              class="choice__img"
-            />
+            <img src="/icon-paper.svg" alt="Paper" class="choice__img" />
           </div>
         </button>
 
         <button class="choice__scissor" onclick="clickChoice('scissor')">
           <div class="choice">
-            <img
-              src="/icon-scissors.svg"
-              alt="Scissor"
-              class="choice__img"
-            />
+            <img src="/icon-scissors.svg" alt="Scissor" class="choice__img" />
           </div>
         </button>
 
@@ -55,6 +47,7 @@
 
       <!--Rules Button-->
       <button class="rules__button" id="rules-btn">Rules</button>
+      <button class="exit__btn">exit</button>
 
       <!---Rules Page-->
       <section class="rules">
@@ -78,7 +71,9 @@
 
         <div class="results">
           <h2 class="results__heading">you lose</h2>
-          <button class="results__button" onclick="playAgain()">play again</button>
+          <button class="results__button" onclick="playAgain()">
+            play again
+          </button>
         </div>
 
         <div class="oppo__choice"></div>
@@ -90,10 +85,12 @@
       <div class="join__container">
         <img src="/logo.svg" alt="LOGO" />
         <div class="join__options">
-          <button class="create_room" onclick="createRoom()">create room</button>
-          
+          <button class="create_room" onclick="createRoom()">
+            create room
+          </button>
+
           <button class="join__room" onclick="joinRoom()">join room</button>
-          <input type="text" placeholder="Enter Room-ID" id="room-id">
+          <input type="text" placeholder="Enter Room-ID" id="room-id" />
         </div>
       </div>
     </section>
