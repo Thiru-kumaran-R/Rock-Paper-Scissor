@@ -92,7 +92,15 @@ io.on("connection", (socket) => {
         p2Score: room[roomID].p2Score,
       });
   });
+
+  socket.on('exitGame', (data) => {
+    const roomID = data.roomID;
+    socket.leave(roomID);
+    socket.emit('startPage');
+  });
+
 });
+
 
 const declareWinner = (roomID) => {
   let winner;

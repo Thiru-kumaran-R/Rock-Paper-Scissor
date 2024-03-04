@@ -11,6 +11,8 @@ const rulesBoard = document.querySelector(".rules");
 const showRulesBoard = document.querySelector(".show__result_board");
 const closeRules = document.querySelector(".close-btn");
 
+const exitBtn = document.querySelector('.exit__btn');
+
 const resultBoard = document.querySelector(".result__board");
 const oppoChoice = document.querySelector(".oppo__choice");
 const yourChoice = document.querySelector(".your__choice");
@@ -92,7 +94,8 @@ socket.on("playersConnected", () => {
   joinPage.classList.add("none");
   header.classList.add("flex");
   gameArea.classList.add("grid");
-  rulesBtn.classList.add("block");
+  rulesBtn.classList.add("inline-block");
+  exitBtn.classList.add('inline-block');
 });
 
 const clickChoice = (rpschoice) => {
@@ -208,6 +211,14 @@ socket.on("playAgain", () => {
   removeWinner();
   returnToGame();
 });
+
+exitBtn.addEventListener("click", () => {
+  socket.emit('exitGame', {roomID : roomID});
+});
+
+socket.on('startPage', () => {
+  joinPage.classList.add("flex");
+})
 
 const displayResult = (choice) => {
   oppoChoice.classList.remove("waiting_to_chose");
