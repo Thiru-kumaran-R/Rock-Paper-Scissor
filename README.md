@@ -1,5 +1,6 @@
 # Rock, Paper, Scissors 
 
+NOTE : NOT FULLY DEVELOPED
 Rock, Paper, Scissor is a two player game, developed using socket.io.
 
 ## Table of contents
@@ -7,7 +8,7 @@ Rock, Paper, Scissor is a two player game, developed using socket.io.
 - [Overview](#overview)
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
-  - [Links](#links))
+  - [Links](#links)
 - [Author](#author)
 
 
