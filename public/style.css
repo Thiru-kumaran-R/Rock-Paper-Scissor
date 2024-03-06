@@ -149,12 +149,18 @@ body {
   box-shadow: inset 0 0.5rem var(--shadow-light);
 }
 
+.footer{
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+}
 /* display ntg */
 .rules__button {
-  display: none;
-  position: absolute;
-  bottom: 3rem;
-  right: 4rem;
+  margin: 0 2rem;
   width: 150px;
   text-align: center;
   text-transform: uppercase;
@@ -170,10 +176,7 @@ body {
 }
 
 .exit__btn{
-  display: none;
-  position: absolute;
-  bottom: 3rem;
-  left: 4rem;
+  margin: 0 2rem;
   width: 150px;
   text-align: center;
   text-transform: uppercase;
@@ -186,6 +189,12 @@ body {
   border-radius: 15px;
   border: 2px solid var(--header-outline);
   cursor: pointer;
+}
+
+.exit__btn:hover,
+.exit__btn:active{
+  border: 2px solid red;
+  color: red;
 }
 
 .rules__button:hover,
@@ -251,7 +260,7 @@ body {
   height: fit-content;
   gap: 6rem;
   max-width: 1000px;
-  margin: 3rem auto;
+  margin: 2.5rem auto;
 }
 
 .your__result {
@@ -270,10 +279,6 @@ body {
 
 .oppo__choice {
   grid-area: oppo-choice;
-  height: 12rem;
-  aspect-ratio: 1/1;
-  background-color: var(--bg-dark);
-  border-radius: 50%;
 }
 
 /* Place holder for waiting  */

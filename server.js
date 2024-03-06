@@ -56,10 +56,10 @@ io.on("connection", (socket) => {
       socket
         .to(roomID)
         .emit("p1Choice", { rpsValue: choice, score: room[roomID].p1Score });
-      if (room[roomID].p2Choice != null) {
+      if (room[roomID].p2Choice ) {
         declareWinner(roomID);
-      } else {
-        socket.emit("waitingForPlayer");
+      }else{
+        socket.emit('waitingForPlayer')
       }
     }
   });
@@ -72,10 +72,10 @@ io.on("connection", (socket) => {
       socket
         .to(roomID)
         .emit("p2Choice", { rpsValue: choice, score: room[roomID].p2Score });
-      if (room[roomID].p1Choice != null) {
+      if (room[roomID].p1Choice ) {
         declareWinner(roomID);
-      } else {
-        socket.emit("waitingForPlayer");
+      }else{
+        socket.emit('waitingForPlayer')
       }
     }
   });

@@ -6,12 +6,15 @@ const scissor = document.querySelector(".choice__scissor");
 const header = document.querySelector(".header");
 const scoreNum = document.querySelector(".score__number");
 
+const oppoTitle = document.querySelector('.opponents__result');
+
+const exitBtn = document.querySelector('.exit__btn');
 const rulesBtn = document.querySelector(".rules__button");
 const rulesBoard = document.querySelector(".rules");
 const showRulesBoard = document.querySelector(".show__result_board");
 const closeRules = document.querySelector(".close-btn");
 
-const exitBtn = document.querySelector('.exit__btn');
+const gameFooter = document.querySelector('.footer');
 
 const resultBoard = document.querySelector(".result__board");
 const oppoChoice = document.querySelector(".oppo__choice");
@@ -94,8 +97,7 @@ socket.on("playersConnected", () => {
   joinPage.classList.add("none");
   header.classList.add("flex");
   gameArea.classList.add("grid");
-  rulesBtn.classList.add("inline-block");
-  exitBtn.classList.add('inline-block');
+  gameFooter.classList.add("flex");
 });
 
 const clickChoice = (rpschoice) => {
@@ -105,6 +107,8 @@ const clickChoice = (rpschoice) => {
   } else if (player1 == false) {
     player = "p2Choice";
   }
+  console.log('click function');
+
   gameArea.classList.add("none");
   resultBoard.classList.add("grid");
   if (rpschoice == "rock") {
@@ -122,47 +126,57 @@ const clickChoice = (rpschoice) => {
 
   const isNoneResultBoard = resultBoard.classList.contains("none");
   if (isNoneResultBoard) {
-    resultBoard.classList.add("grid");
     resultBoard.classList.remove("none");
+    resultBoard.classList.add("grid");
     resultBoard.classList.add("after-choosing");
-    document.querySelector(".opponents__result").innerText = "Choosing...";
-    oppoChoice.classList.add("waiting_to_chose");
   }
 
   socket.emit(player, {
     rpschoice: rpschoice,
     roomID: roomID,
   });
+
+};
+
+const displayResult = (choice) => {
+  results.classList.remove("none");
+  results.classList.add("grid");
+  console.log('display result function');
+  oppoChoice.classList.remove("waiting_to_chose");
+  if (choice == "rock") {
+    oppoChoice.innerHTML = rockChoice;
+    oppoChoice.classList.toggle("increase-size");
+  }
+  if (choice == "paper") {
+    oppoChoice.innerHTML = paperChoice;
+    oppoChoice.classList.toggle("increase-size");
+  }
+  if (choice == "scissor") {
+    oppoChoice.innerHTML = scissorChoice;
+    oppoChoice.classList.toggle("increase-size");
+  }
 };
 
 socket.on("p1Choice", (data) => {
   if (!player1) {
-    const isNoneResult = results.classList.contains("none");
-    if (isNoneResult) {
-      results.classList.remove("none");
-      results.classList.add("grid");
-    }
+    console.log('p1Choice');
     displayResult(data.rpsValue);
+    oppoTitle.innerText = "OPPO PICKED";
+    oppoChoice.classList.remove("waiting_to_chose");
   }
 });
 
 socket.on("p2Choice", (data) => {
   if (player1) {
-    const isNoneResult = results.classList.contains("none");
-    if (isNoneResult) {
-      results.classList.remove("none");
-      results.classList.add("grid");
-    }
+    console.log('p2Choice');
     displayResult(data.rpsValue);
+    oppoTitle.innerText = "OPPO PICKED";
+    oppoChoice.classList.remove("waiting_to_chose");
   }
 });
 
-socket.on("waitingForPlayer", () => {
-  document.querySelector(".opponents__result").innerText = "Choosing...";
-  oppoChoice.classList.add("waiting_to_chose");
-});
 
-socket.on("winner", (data) => {
+socket.on("winner", data => {
   winner = data;
   if (data == "draw") {
     resultsHeading.innerText = "DRAW";
@@ -190,12 +204,45 @@ socket.on("winner", (data) => {
       oppoChoice.classList.add("winner");
     }
   }
-  oppoChoice.classList.remove("waiting_to_chose");
+  console.log('winner func');
+  
   resultBoard.classList.add("after-choosing");
   results.classList.add("grid");
-
   scoreNum.innerText = score;
 });
+
+const returnToGame = () => {
+  resultBoard.classList.remove("grid");
+  resultBoard.classList.add("none");
+  resultBoard.classList.remove("after-choosing");
+  //results
+  results.classList.remove("grid");
+  results.classList.add("none");
+  //choice
+  yourChoice.innerHTML = "";
+  yourChoice.classList.toggle("increase-size");
+  oppoChoice.innerHTML = "";
+  oppoChoice.classList.toggle("increase-size");
+  //main game area
+  gameArea.classList.remove("none");
+  gameArea.classList.add("grid");
+  //OPPO choice
+  console.log('returnToGame function');
+  oppoTitle.innerText = 'Choosing...';
+  oppoChoice.classList.add('waiting_to_chose');
+};
+
+const removeWinner = () => {
+  console.log('removeWinner function');
+  const isWinnerP1 = yourChoice.classList.contains("winner");
+  const isWinnerP2 = oppoChoice.classList.contains("winner");
+  if (isWinnerP1) {
+    yourChoice.classList.remove("winner");
+  }
+  if (isWinnerP2) {
+    oppoChoice.classList.remove("winner");
+  }
+};
 
 const playAgain = () => {
   socket.emit("playerClicked", {
@@ -220,50 +267,5 @@ socket.on('startPage', () => {
   joinPage.classList.add("flex");
 })
 
-const displayResult = (choice) => {
-  oppoChoice.classList.remove("waiting_to_chose");
-  document.querySelector(".opponents__result").innerText = "OPPO PICKED";
-  if (choice == "rock") {
-    oppoChoice.innerHTML = rockChoice;
-    oppoChoice.classList.toggle("increase-size");
-  }
-  if (choice == "paper") {
-    oppoChoice.innerHTML = paperChoice;
-    oppoChoice.classList.toggle("increase-size");
-  }
-  if (choice == "scissor") {
-    oppoChoice.innerHTML = scissorChoice;
-    oppoChoice.classList.toggle("increase-size");
-  }
-};
 
-const removeWinner = () => {
-  const isWinnerP1 = yourChoice.classList.contains("winner");
-  const isWinnerP2 = oppoChoice.classList.contains("winner");
-  if (isWinnerP1) {
-    yourChoice.classList.remove("winner");
-  }
-  if (isWinnerP2) {
-    oppoChoice.classList.remove("winner");
-  }
-};
 
-const returnToGame = () => {
-  resultBoard.classList.remove("grid");
-  resultBoard.classList.add("none");
-  resultBoard.classList.remove("after-choosing");
-  //results
-  results.classList.remove("grid");
-  results.classList.add("none");
-  //choice
-  yourChoice.innerHTML = "";
-  yourChoice.classList.toggle("increase-size");
-  oppoChoice.innerHTML = "";
-  oppoChoice.classList.toggle("increase-size");
-  //main game area
-  gameArea.classList.remove("none");
-  gameArea.classList.add("grid");
-  //opponents 
-  document.querySelector(".opponents__result").innerText = "Choosing...";
-  oppoChoice.classList.add("waiting_to_chose")
-};
