@@ -1,29 +1,45 @@
-# Rock, Paper, Scissors 
 
-NOTE : NOT FULLY DEVELOPED
-Rock, Paper, Scissor is a two player game, developed using socket.io.
+# Rock Paper Scissor
 
-## Table of contents
+This is a classic Rock Paper Scissors game built using HTML, CSS, JavaScript, Node.js, Express, and Socket.io. It allows users to play, game against each other in real-time over the internet.
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [Author](#author)
+<!-- 
+## Demo
+
+You can try out the game [here](https://aptitude-api.vercel.app/Calendar) -->
 
 
-## Overview
+## Installation
 
-### The challenge
+To run this game locally follow these steps :
 
-Users should be able to:
+1   ) Clone this repository
+```bash
+  git clone https://github.com/thirukumaran05/rock-paper-scissors.git
+```
 
-- View the optimal layout for the game depending on their device's screen size
-- Play Rock, Paper, Scissors against the computer
+2 ) Navigate to the project directory:
+```bash
+ cd rock-paper-scissors
+```
 
-### Links
+3 )Install dependencies:
+```bash
+ npm install
+```
 
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+4 ) Start the server:
+```bash
+ npm start
+```
+
+5 ) Open your browser and visit http://localhost:3000 to play the game.
+## Screenshots
+
+
+![App Screenshot](https://via.placeholder.com/468x300?text=Rock+Paper+Scissor)
+
+
 
 ## Author
 

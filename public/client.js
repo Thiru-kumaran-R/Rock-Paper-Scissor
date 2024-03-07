@@ -234,14 +234,9 @@ const returnToGame = () => {
 
 const removeWinner = () => {
   console.log('removeWinner function');
-  const isWinnerP1 = yourChoice.classList.contains("winner");
-  const isWinnerP2 = oppoChoice.classList.contains("winner");
-  if (isWinnerP1) {
-    yourChoice.classList.remove("winner");
-  }
-  if (isWinnerP2) {
-    oppoChoice.classList.remove("winner");
-  }
+  yourChoice.classList.remove("winner");
+  oppoChoice.classList.remove("winner");
+  
 };
 
 const playAgain = () => {
