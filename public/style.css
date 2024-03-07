@@ -30,7 +30,9 @@ body {
 }
 
 .container {
-  margin: auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 1rem;
   height: 100%;
   max-width: 700px;
@@ -75,9 +77,16 @@ body {
   font-weight: 600;
 }
 
+.to__center{
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* display grid */
 .main {
-  position: relative;
   display: none;
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas:
@@ -94,7 +103,7 @@ body {
   height: 100%;
   width: 100%;
   top: 30%;
-  left: 26%;
+  left: 28%;
   background: url("/bg-triangle.svg") no-repeat;
   z-index: -1;
 }
@@ -150,12 +159,12 @@ body {
 }
 
 .footer{
+  position: fixed;
   display: none;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  position: absolute;
-  bottom: 1rem;
+  bottom: 1.5rem;
   left: 0;
 }
 /* display ntg */
@@ -251,12 +260,16 @@ body {
 
 /* display grid*/
 .result__board {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: none;
   place-items: center;
+  grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
-    "your-text oppo-text"
-    "your-choice oppo-choice";
+    "your-text .  oppo-text"
+    "your-choice . oppo-choice";
   height: fit-content;
   gap: 6rem;
   max-width: 1000px;

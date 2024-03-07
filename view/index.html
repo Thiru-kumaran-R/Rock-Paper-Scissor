@@ -25,25 +25,27 @@
         </div>
       </header>
 
-      <section class="main">
-        <button class="choice__paper" onclick="clickChoice('paper')">
-          <div class="choice">
-            <img src="/icon-paper.svg" alt="Paper" class="choice__img" />
-          </div>
-        </button>
+      <div class="to__center">
+        <section class="main">
+          <button class="choice__paper" onclick="clickChoice('paper')">
+            <div class="choice">
+              <img src="/icon-paper.svg" alt="Paper" class="choice__img" />
+            </div>
+          </button>
 
-        <button class="choice__scissor" onclick="clickChoice('scissor')">
-          <div class="choice">
-            <img src="/icon-scissors.svg" alt="Scissor" class="choice__img" />
-          </div>
-        </button>
+          <button class="choice__scissor" onclick="clickChoice('scissor')">
+            <div class="choice">
+              <img src="/icon-scissors.svg" alt="Scissor" class="choice__img" />
+            </div>
+          </button>
 
-        <button class="choice__rock" onclick="clickChoice('rock')">
-          <div class="choice">
-            <img src="/icon-rock.svg" alt="Rock" class="choice__img" />
-          </div>
-        </button>
-      </section>
+          <button class="choice__rock" onclick="clickChoice('rock')">
+            <div class="choice">
+              <img src="/icon-rock.svg" alt="Rock" class="choice__img" />
+            </div>
+          </button>
+        </section>
+      </div>
 
       <!---Rules Page-->
       <section class="rules">
@@ -72,14 +74,14 @@
           </button>
         </div>
 
-        <div class="oppo__choice"></div>
+        <div class="oppo__choice waiting_to_chose"></div>
       </section>
-
-      <footer class="footer">
-        <button class="rules__button" id="rules-btn">Rules</button>
-        <button class="exit__btn">exit</button>
-      </footer>
     </section>
+
+    <footer class="footer">
+      <button class="rules__button" id="rules-btn">Rules</button>
+      <button class="exit__btn" onclick="exitGame()">exit</button>
+    </footer>
 
     <!-- join page -->
     <section class="join">

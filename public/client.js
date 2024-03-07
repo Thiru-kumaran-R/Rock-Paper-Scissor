@@ -259,12 +259,34 @@ socket.on("playAgain", () => {
   returnToGame();
 });
 
-exitBtn.addEventListener("click", () => {
-  socket.emit('exitGame', {roomID : roomID});
-});
+const returnToLogin = () => {
+  joinPage.classList.remove("none");
+  joinPage.classList.add('flex');
+  header.classList.remove("flex");
+  header.classList.add("none");
+  gameArea.classList.remove("grid");
+  gameArea.classList.add("none");
+  gameFooter.classList.remove("flex");
+  gameFooter.classList.add("none");
+}
 
-socket.on('startPage', () => {
-  joinPage.classList.add("flex");
+const exitGame =  () => {
+  socket.emit('exitGame', {roomID : roomID, player : player1});
+  returnToLogin();
+};
+
+socket.on('player1Left', () => {
+  if(!player1){
+    alert('player 1 left')
+    returnToLogin();
+  }
+})
+
+socket.on('player2Left', () => {
+  if(player1){
+    alert('player 2 left')
+    returnToLogin();
+  }
 })
 
 

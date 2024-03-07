@@ -95,8 +95,12 @@ io.on("connection", (socket) => {
 
   socket.on('exitGame', (data) => {
     const roomID = data.roomID;
+    if(data.player){
+      socket.to(roomID).emit('player1Left')
+    }else{
+      socket.to(roomID).emit('player2Left')
+    }
     socket.leave(roomID);
-    socket.emit('startPage');
   });
 
 });
