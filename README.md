@@ -34,16 +34,16 @@ To run this game locally follow these steps :
 ```
 
 5 ) Open your browser and visit http://localhost:3000 to play the game.
-## Screenshots
+<!-- ## Screenshots -->
 
 
-![App Screenshot](<img width="1429" alt="demo" src="https://github.com/thirukumaran05/Rock-Paper-Scissor/assets/114419114/35fb00be-6b94-4009-99c6-983da77c4c3d">)
+<!-- ![App Screenshot](<img width="1429" alt="demo" src="https://github.com/thirukumaran05/Rock-Paper-Scissor/assets/114419114/35fb00be-6b94-4009-99c6-983da77c4c3d">) -->
 
 
 
-## Author
+<!-- ## Author
 
 - Website - [Add your name here](https://www.your-site.com)
 - Linked In - [@yourusername](https://www.twitter.com/yourusername)
-
+ -->
 
