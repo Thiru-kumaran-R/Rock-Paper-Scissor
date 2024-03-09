@@ -72,7 +72,6 @@ closeRules.addEventListener("click", () => {
 
 let roomID;
 let player1 = false;
-let score = 0;
 let winner;
 
 ///Socket
@@ -88,8 +87,19 @@ const createRoom = () => {
 const joinRoom = () => {
   roomID = roomId.value;
   if (!roomID) {
-    alert("Enter token");
+    alert("Room Token is Required ");
+    return joinPage.classList.add('flex');
   }
+
+  socket.on('notValidToken', () => {
+    return alert('Invalid Token..');
+  })
+  
+  socket.on('roomFull', () => {
+    alert('Max player reached !');
+    return joinPage.classList.add('flex');
+  })
+
   socket.emit("joinRoom", roomID);
 };
 
@@ -141,7 +151,7 @@ const clickChoice = (rpschoice) => {
 const displayResult = (choice) => {
   results.classList.remove("none");
   results.classList.add("grid");
-  console.log('display result function');
+ 
   oppoChoice.classList.remove("waiting_to_chose");
   if (choice == "rock") {
     oppoChoice.innerHTML = rockChoice;
@@ -175,18 +185,23 @@ socket.on("p2Choice", (data) => {
   }
 });
 
+const updateScore = (score) => {
+  scoreNum.innerText = score;
+}
 
 socket.on("winner", data => {
+  let p1Score = 0;
+  let p2Score = 0;
   winner = data;
   if (data == "draw") {
     resultsHeading.innerText = "DRAW";
-    score += 0;
   } else if (data == "p1") {
     if (player1) {
       resultsHeading.innerText = "YOU WIN";
       resultButton.style.color = "#0D9276";
       yourChoice.classList.add("winner");
-      score += 1;
+      p1Score++
+      updateScore(p1Score)
     } else {
       resultsHeading.innerText = "YOU LOSE";
       resultButton.style.color = "#FF004D";
@@ -197,18 +212,17 @@ socket.on("winner", data => {
       resultsHeading.innerText = "YOU WIN";
       resultButton.style.color = "#0D9276";
       yourChoice.classList.add("winner");
-      score += 1;
+      p2Score++;
+      updateScore(p2Score)
     } else {
       resultsHeading.innerText = "YOU LOSE";
       resultButton.style.color = "#FF004D";
       oppoChoice.classList.add("winner");
     }
   }
-  console.log('winner func');
   
   resultBoard.classList.add("after-choosing");
   results.classList.add("grid");
-  scoreNum.innerText = score;
 });
 
 const returnToGame = () => {
@@ -234,7 +248,7 @@ const returnToGame = () => {
 
 const removeWinner = () => {
   console.log('removeWinner function');
-  console.log(winner);
+  console.log(typeof(winner));
   if(player1){
     if(winner == 'p1'){
       yourChoice.classList.remove("winner");

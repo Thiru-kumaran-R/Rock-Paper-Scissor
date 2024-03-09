@@ -21,7 +21,6 @@ const server = app.listen(PORT);
 const io = new Server(server);
 
 let room = [];
-let roomID;
 
 io.on("connection", (socket) => {
   console.log("client connected");
@@ -30,8 +29,7 @@ io.on("connection", (socket) => {
     console.log("Client disconnected");
   });
 
-  socket.on("createRoom", (roomId) => {
-    roomID = roomId;
+  socket.on("createRoom", (roomID) => {
     room[roomID] = { p1Choice: null };
     room[roomID] = { p1Score: 0 };
     socket.join(roomID);
@@ -39,13 +37,23 @@ io.on("connection", (socket) => {
   });
 
   socket.on("joinRoom", (roomID) => {
-    console.log(roomID);
-    socket.join(roomID);
-    room[roomID] = { p2Choice: null };
-    room[roomID] = { p2Score: 0 };
-    console.log("client 2 joined");
-    socket.to(roomID).emit("playersConnected");
-    socket.emit("playersConnected");
+    if (!io.sockets.adapter.rooms.has(roomID)) {
+      return socket.emit("notValidToken");
+    }
+
+    const roomSize = io.sockets.adapter.rooms.get(roomID).size;
+    if (roomSize > 1) {
+      return socket.emit("roomFull");
+    }
+
+    if (io.sockets.adapter.rooms.has(roomID)) {
+      socket.join(roomID);
+      room[roomID] = { p2Choice: null };
+      room[roomID] = { p2Score: 0 };
+
+      socket.to(roomID).emit("playersConnected");
+      return socket.emit("playersConnected");
+    }
   });
 
   socket.on("p1Choice", (data) => {
@@ -56,10 +64,8 @@ io.on("connection", (socket) => {
       socket
         .to(roomID)
         .emit("p1Choice", { rpsValue: choice, score: room[roomID].p1Score });
-      if (room[roomID].p2Choice ) {
-        declareWinner(roomID);
-      }else{
-        socket.emit('waitingForPlayer')
+      if (room[roomID].p2Choice) {
+        return declareWinner(roomID);
       }
     }
   });
@@ -72,10 +78,8 @@ io.on("connection", (socket) => {
       socket
         .to(roomID)
         .emit("p2Choice", { rpsValue: choice, score: room[roomID].p2Score });
-      if (room[roomID].p1Choice ) {
-        declareWinner(roomID);
-      }else{
-        socket.emit('waitingForPlayer')
+      if (room[roomID].p1Choice) {
+        return declareWinner(roomID);
       }
     }
   });
@@ -85,26 +89,22 @@ io.on("connection", (socket) => {
     room[roomID].p1Score = data.score;
     room[roomID].p1Choice = null;
     console.log(room[roomID]);
-    socket
-      .to(roomID)
-      .emit("playAgain", {
-        p1Score: room[roomID].p1Score,
-        p2Score: room[roomID].p2Score,
-      });
+    return socket.to(roomID).emit("playAgain", {
+      p1Score: room[roomID].p1Score,
+      p2Score: room[roomID].p2Score,
+    });
   });
 
-  socket.on('exitGame', (data) => {
+  socket.on("exitGame", (data) => {
     const roomID = data.roomID;
-    if(data.player){
-      socket.to(roomID).emit('player1Left')
-    }else{
-      socket.to(roomID).emit('player2Left')
+    if (data.player) {
+      socket.to(roomID).emit("player1Left");
+    } else {
+      socket.to(roomID).emit("player2Left");
     }
-    socket.leave(roomID);
+    return socket.leave(roomID);
   });
-
 });
-
 
 const declareWinner = (roomID) => {
   let winner;
@@ -129,5 +129,5 @@ const declareWinner = (roomID) => {
       winner = "p1";
     }
   }
-  io.sockets.to(roomID).emit("winner", winner);
+  return io.sockets.to(roomID).emit("winner", winner);
 };
