@@ -73,6 +73,8 @@ closeRules.addEventListener("click", () => {
 let roomID;
 let player1 = false;
 let winner;
+let player1Score = 0;
+let player2Score = 0;
 
 ///Socket
 const socket = io();
@@ -117,7 +119,6 @@ const clickChoice = (rpschoice) => {
   } else if (player1 == false) {
     player = "p2Choice";
   }
-  console.log('click function');
 
   gameArea.classList.add("none");
   resultBoard.classList.add("grid");
@@ -185,13 +186,18 @@ socket.on("p2Choice", (data) => {
   }
 });
 
-const updateScore = (score) => {
-  scoreNum.innerText = score;
+const updateScore = (p1Score, p2Score) => {
+  if(player1){
+    scoreNum.innerText = p1Score;
+  }
+
+  if(!player1){
+    scoreNum.innerText = p2Score;
+  }
+  
 }
 
 socket.on("winner", data => {
-  let p1Score = 0;
-  let p2Score = 0;
   winner = data;
   if (data == "draw") {
     resultsHeading.innerText = "DRAW";
@@ -200,8 +206,8 @@ socket.on("winner", data => {
       resultsHeading.innerText = "YOU WIN";
       resultButton.style.color = "#0D9276";
       yourChoice.classList.add("winner");
-      p1Score++
-      updateScore(p1Score)
+      player1Score = player1Score + 1;
+      updateScore(player1Score, player2Score) 
     } else {
       resultsHeading.innerText = "YOU LOSE";
       resultButton.style.color = "#FF004D";
@@ -212,8 +218,8 @@ socket.on("winner", data => {
       resultsHeading.innerText = "YOU WIN";
       resultButton.style.color = "#0D9276";
       yourChoice.classList.add("winner");
-      p2Score++;
-      updateScore(p2Score)
+      player2Score = player2Score + 1;
+      updateScore(player1Score, player2Score); 
     } else {
       resultsHeading.innerText = "YOU LOSE";
       resultButton.style.color = "#FF004D";
@@ -226,6 +232,8 @@ socket.on("winner", data => {
 });
 
 const returnToGame = () => {
+  player1Score = 0;
+  player2Score = 0;
   resultBoard.classList.remove("grid");
   resultBoard.classList.add("none");
   resultBoard.classList.remove("after-choosing");
@@ -247,8 +255,6 @@ const returnToGame = () => {
 };
 
 const removeWinner = () => {
-  console.log('removeWinner function');
-  console.log(typeof(winner));
   if(player1){
     if(winner == 'p1'){
       yourChoice.classList.remove("winner");
@@ -276,7 +282,6 @@ const removeWinner = () => {
 
 const playAgain = () => {
   socket.emit("playerClicked", {
-    score: score,
     roomID: roomID,
     player1: player1,
   });

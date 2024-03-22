@@ -89,10 +89,7 @@ io.on("connection", (socket) => {
     room[roomID].p1Score = data.score;
     room[roomID].p1Choice = null;
     console.log(room[roomID]);
-    return socket.to(roomID).emit("playAgain", {
-      p1Score: room[roomID].p1Score,
-      p2Score: room[roomID].p2Score,
-    });
+    return socket.to(roomID).emit("playAgain");
   });
 
   socket.on("exitGame", (data) => {
