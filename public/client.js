@@ -228,6 +228,7 @@ socket.on("winner", data => {
   }
   
   resultBoard.classList.add("after-choosing");
+  results.classList.remove("none");
   results.classList.add("grid");
 });
 
@@ -249,32 +250,14 @@ const returnToGame = () => {
   gameArea.classList.remove("none");
   gameArea.classList.add("grid");
   //OPPO choice
-  console.log('returnToGame function');
   oppoTitle.innerText = 'Choosing...';
   oppoChoice.classList.add('waiting_to_chose');
 };
 
 const removeWinner = () => {
-  if(player1){
-    if(winner == 'p1'){
-      yourChoice.classList.remove("winner");
-    }else if(winner != 'p1'){
-      oppoChoice.classList.remove("winner");
-    }
-  }
-  if(!player1){
-    if(winner == 'p2'){
-      yourChoice.classList.remove("winner");
-    }else if (winner != 'p2') {
-      oppoChoice.classList.remove("winner");
-    }
-  }
 
-  if(oppoChoice.classList.contains('waiting_to_chose')){
+  if(oppoChoice.classList.contains('winner') || yourChoice.classList.contains('winner')){
     oppoChoice.classList.remove("winner");
-  }
-
-  if(yourChoice.classList.contains('waiting_to_chose')){
     yourChoice.classList.remove("winner");
   }
 

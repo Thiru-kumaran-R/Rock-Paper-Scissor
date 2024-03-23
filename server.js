@@ -49,7 +49,6 @@ io.on("connection", (socket) => {
     if (io.sockets.adapter.rooms.has(roomID)) {
       socket.join(roomID);
       room[roomID] = { p2Choice: null };
-      room[roomID] = { p2Score: 0 };
 
       socket.to(roomID).emit("playersConnected");
       return socket.emit("playersConnected");
