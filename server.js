@@ -6,8 +6,8 @@ import { Server } from "socket.io";
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
+const __filename = fileURLToPath(import.meta.url); 
+const __dirname = path.dirname(__filename); 
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "view")));
@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom", (roomID) => {
     if (!io.sockets.adapter.rooms.has(roomID)) {
-      return socket.emit("notValidToken");
+      return socket.emit("Not a ValidToken");
     }
 
     const roomSize = io.sockets.adapter.rooms.get(roomID).size;
@@ -85,9 +85,7 @@ io.on("connection", (socket) => {
 
   socket.on("playerClicked", (data) => {
     const roomID = data.roomID;
-    room[roomID].p1Score = data.score;
     room[roomID].p1Choice = null;
-    console.log(room[roomID]);
     return socket.to(roomID).emit("playAgain");
   });
 

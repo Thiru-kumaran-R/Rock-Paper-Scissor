@@ -80,7 +80,7 @@ body {
 .to__center{
   position: absolute;
   width: 100%;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -165,8 +165,8 @@ body {
   justify-content: space-between;
   width: 100%;
   bottom: 1.5rem;
-  left: 0;
 }
+
 /* display ntg */
 .rules__button {
   margin: 0 2rem;
@@ -377,7 +377,7 @@ body {
   background-color: #fff;
   border-radius: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.3rem;
+  letter-spacing: 0.25rem;
   font-weight: 600;
   color: var(--score-text);
   border: none;
