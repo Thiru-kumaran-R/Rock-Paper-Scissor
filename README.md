@@ -38,6 +38,6 @@ To run this game locally follow these steps :
 ## Screenshots -->
 
 
-![App Screenshot](<img width="1429" alt="demo" src="https://github.com/thirukumaran05/Rock-Paper-Scissor/images/demo.png>)
+![App Screenshot](https://github.com/thirukumaran05/Rock-Paper-Scissor/blob/main/demo.png?raw=true)
 
 
