@@ -77,7 +77,7 @@ let player1Score = 0;
 let player2Score = 0;
 
 ///Socket
-const socket = io('https://rock-paper-scissor-six-gamma.vercel.app/');
+const socket = io.connect( "https://rock-paper-scissor-six-gamma.vercel.app/", { secure: true, transports: [ "flashsocket","polling","websocket" ] } );
 
 const createRoom = () => {
   player1 = true;
