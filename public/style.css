@@ -358,7 +358,7 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: var(--bg-dark);
+  background-image: radial-gradient(at top, #1f3656, #172041);
 }
 
 .join__container {
