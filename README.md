@@ -1,7 +1,7 @@
 
 # Rock Paper Scissor
 
-This is a classic Rock Paper Scissors game built using HTML, CSS, JavaScript, Node.js, Express, and Socket.io. It allows users to play, game against each other in real-time over the internet.
+A classic Rock Paper Scissors game built using HTML, CSS, JavaScript, Node.js, Express, and Socket.io. It allows users to play, game against each other in real-time over the internet.
 
 ## Screenshots 
 
