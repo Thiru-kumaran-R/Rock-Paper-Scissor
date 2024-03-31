@@ -44,6 +44,4 @@ To run this game locally follow these steps :
 5 ) Open your browser and visit http://localhost:3000 to play the game.
 
 
-## Demo
 
-You can try out the game [here](https://rock-paper-scissor-90i2l3mzj-thirukumarans-projects.vercel.app/)
