@@ -50,17 +50,6 @@ To run this game locally, follow these steps:
 ### Result Page
 ![App Screenshot](https://github.com/thirukumaran05/Rock-Paper-Scissor/blob/main/images/winner.png?raw=true)
 
-## Contributing
-
-Contributions are welcome! If you find any bugs or want to suggest improvements, feel free to open an issue or submit a pull request.
-
-## License
-
-[Insert License Here]
-
-## Acknowledgements
-
-- This project was inspired by the classic rock-paper-scissors game.
 
 ## Installation
 
@@ -89,4 +78,10 @@ To run this game locally follow these steps :
 5 ) Open your browser and visit http://localhost:3000 to play the game.
 
 
+## Contributing
 
+Contributions are welcome! If you find any bugs or want to suggest improvements, feel free to open an issue or submit a pull request.
+
+## Acknowledgements
+
+- This project was inspired by the classic rock-paper-scissors game.
